@@ -1,4 +1,4 @@
-#Rates(Iran's exchange rates CLI)
+# Rates(Iran's exchange rates CLI)
 This CLI is built based on Scalajs. It meant to be used as educational material for scala developers who want to start with Scalajs.
 I use this CLI on daily bases to check the exchanges' rates from the console so I thought it might be useful for other developers as well! It is published as an NPM package as well and you can install and use it easily.
 If you are a Scala developer that checks the exchange rates frequently :D, feel free to make a PR to improve the CLI!

@@ -11,3 +11,5 @@
 .vscode/
 metals.sbt
 target/
+node_modules/
+package-lock.json
