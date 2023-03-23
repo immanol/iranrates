@@ -1,15 +1,16 @@
 # Rates(Iran's exchange rates CLI)
+[![npm iranrates package](https://img.shields.io/npm/v/iranrates.svg)](https://npmjs.org/package/iranrates)  [![GitHub](https://img.shields.io/badge/github-%23121011.svg?logo=github)](https://github.com/immanol/iranrates)
+
 This CLI is built based on Scalajs. It meant to be used as educational material for scala developers who want to start with Scalajs.
 I use this CLI on daily bases to check the exchanges' rates from the console so I thought it might be useful for other developers as well! It is published as an NPM package as well and you can install and use it easily.
 If you are a Scala developer that checks the exchange rates frequently :D, feel free to make a PR to improve the CLI!
-
 # How to install
 ```shell
 npm install -g iranrates
 ```
 # How to use
 ```shell
-Usage: rates [--exchange <name>] [--currency <name>]... [--output <output type>] [--timeout <miliseconds>]
+Usage: rates [--exchange <name>] [--symbol <name>]... [--output <output type>] [--timeout <miliseconds>]
 
 Check the iran currency exchange rates
 
@@ -20,16 +21,16 @@ Options and flags:
         Print the version number and exit.
     --exchange <name>, -e <name>
         The exchange to extract the rate. For example, [Bonbast,Tgju,All]
-    --currency <name>, -c <name>
-        The currency you look for its rate. For example, [All,EUR,USD,GBP,CHF,CAD,AUD,SEK,NOK,RUB,DKK,TRY]
+    --symbol <name>, -s <name>
+        The symbol you look for its rate. For example, [All,EUR,USD,GBP,CHF,CAD,AUD,SEK,NOK,RUB,DKK,TRY,AZADI,AZADIHALF,AZADIQUARTER,AZADIGRAM,SEKEH,GGRAM,GMISQAL,GOUNCE,GOLD]
     --output <output type>, -o <output type>
         Defines the type of output For example, [h, v, horizontal, vertical]. Default is Vertical
     --timeout <miliseconds>, -t <miliseconds>
-        Defines the timeout for getting the information from each exchange. Default is 3000ms.     
+        Defines the timeout for getting the information from each exchange. Default is 3000ms.   
 ```
 For example;
 ```shell
-iranrates -e bonbast -c eur -c usd
+iranrates -e bonbast -c eur -s usd
 ```
 produce something like this;
 ```shell
@@ -39,23 +40,37 @@ USD           46,550
 ```
 or 
 ```shell
-iranrates -e bonbast -c all -c all
+iranrates -e all -s all
 ```
 produce something like this;
 ```shell
-              bonbast.com             tgju.org             
-AUD           31,150                  30,920                 
-CAD           33,950                  33,850                 
-CHF           50,200                  50,170                 
-DKK           6,645                   6,630                  
-EUR           49,500                  49,226                 
-GBP           56,450                  56,168                 
-NOK           4,345                   4,330                  
-RUB           605                     609                    
-SEK           4,430                   4,410                  
-TRY           2,450                   2,450                  
-USD           46,550                  45,632                       
+
+                      bonbast.com          tgju.org             
+AUD                   33,250               32,220               
+AZADI                 28,200,000           28,201,000           
+AZADIGRAM             6,800,000            6,800,000            
+AZADIHALF             18,500,000           18,500,000           
+AZADIQUARTER          11,200,000           11,200,000           
+CAD                   36,150               35,050               
+CHF                   53,950               51,940               
+DKK                   7,220                6,890                
+EUR                   53,800               51,133               
+GBP                   60,850               58,598               
+GGRAM                 2,640,702            2,640,600            
+GMISQAL               11,439,000           11,436,000           
+GOUNCE                197,747              19,312               
+NOK                   4,775                4,500                
+RUB                   650                  633                  
+SEK                   4,810                4,580                
+TRY                   2,595                2,530                
+USD                   49,400               47,208             
 ```
+# New Changes
+from version `0.1.0` we have changed the `currency` to `symbol` because we have added a few new rates like `gold` and `sekeh`. These are not a currency so we couldn't use the concept of currency anymore. So instead of `--currency` or `-c` you need to use `--symbol` or `-s`.
+A few new symbols:
+- SEKEH: which includes a few other symbols(AZADI, AZADIHALF, AZADIQUARTER and AZADIGRAM). 
+- GOLD: which includes a few other symbols(GGRAM, GMISQAL, GOUNCE).
+So if you use `-s SEKEH` or `s GOLD` it will provide all the symbols under the category of SEKEH or GOLD. You can use the sub-category symbols alone as well. For example, you can request only AZADI or GGRAM,...
 
 # Why Scalajs
 It might sound weird to use Scalajs to develop a CLI! Scalajs compiles to javascript and the final output of a Scalajs project is a `js` file that can be used in a web application that targets the browsers or in an application that targets the Nodejs platform. So we can use Nodejs as a platform for our CLI.

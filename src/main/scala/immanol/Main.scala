@@ -14,6 +14,7 @@ import immanol.js.Prompts
 import cats.data.NonEmptyList
 
 import immanol.utils.StdOut
+
 object Main extends CommandIOApp(
       name = "rates",
       header = "Check the iran currency exchange rates",
@@ -48,24 +49,24 @@ object Main extends CommandIOApp(
         .map(exchange => IO.fromEither(Exchange.withName(exchange)))
         .withDefault(Prompts.promptExchanges)
 
-    val currencyOpts =
+    val symbolOpts =
       Opts
         .options[String](
-          "currency",
-          short = "c",
+          "symbol",
+          short = "s",
           metavar = "name",
-          help = s"The currency you look for its rate. For example, [${Currency.all.mkString(",")}]"
+          help = s"The symbol you look for its rate. For example, [${Symbol.all.mkString(",")}]"
         )
-        .map { currencies =>
-          currencies.toList.traverse(c => IO.fromEither(Currency.withName(c)))
+        .map { symbols =>
+          symbols.toList.traverse(c => IO.fromEither(Symbol.withName(c)))
         }
-        .withDefault(Prompts.promptCurrency)
+        .withDefault(Prompts.promptSymbols)
 
     val program =
-      (exchangeOpts, currencyOpts, outputOpt, timeoutOpt).mapN { case (exchangeIO, currencyIO, outputIO, timeoutIO) =>
+      (exchangeOpts, symbolOpts, outputOpt, timeoutOpt).mapN { case (exchangeIO, symbolIO, outputIO, timeoutIO) =>
         for {
           e   <- exchangeIO
-          c   <- currencyIO
+          c   <- symbolIO
           o   <- outputIO
           t   <- timeoutIO
           res <- ExchangeService.get(e, c, t)

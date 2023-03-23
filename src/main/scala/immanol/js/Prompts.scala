@@ -39,32 +39,32 @@ object Prompts {
     ioPrompt[ExchangeAnswer](exchangesQuestion).map(a => Exchange.unsafeWithName(a.exchange))
   }
 
-  def promptCurrency(): IO[List[Currency]] = {
-    val currencyQuestion = new js.Object {
+  def promptSymbols(): IO[List[Symbol]] = {
+    val symbolsQuestion = new js.Object {
       val `type`  = "multiselect"
-      val name    = "currencies"
-      val message = "Which currency?"
-      val choices = Currency.all.toJSArray.map { c =>
+      val name    = "symbols"
+      val message = "Which Symbol?"
+      val choices = Symbol.all.toJSArray.map { c =>
         new js.Object {
           val title    = c.toString()
           val value    = c.toString()
-          val selected = c == Currency.All
+          val selected = c == Symbol.All
         }
       }
     }
 
-    trait CurrencyAnswer extends js.Object {
-      val currencies: js.Array[String]
+    trait SymbolAnswer extends js.Object {
+      val symbols: js.Array[String]
     }
 
-    ioPrompt[CurrencyAnswer](currencyQuestion).map { a =>
-      if (a.currencies.contains("All"))
-        Currency.allWithoutAll
+    ioPrompt[SymbolAnswer](symbolsQuestion).map { a =>
+      if (a.symbols.contains("All"))
+        Symbol.allActualSymbols
       else
-        a.currencies
+        a.symbols
           .toList
           .filterNot(_.equals("All"))
-          .map(a => Currency.unsafeWithName(a))
+          .map(a => Symbol.unsafeWithName(a))
 
     }
   }

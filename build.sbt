@@ -1,7 +1,7 @@
 enablePlugins(ScalaJSPlugin, NpmPackagePlugin, ScalaJSBundlerPlugin)
 
 name                            := "iran-rates"
-version                         := "0.0.2"
+version                         := "0.1.0"
 scalaVersion                    := "2.13.10"
 scalaJSUseMainModuleInitializer := true
 
